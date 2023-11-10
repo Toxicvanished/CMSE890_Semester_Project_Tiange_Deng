@@ -26,23 +26,20 @@ function make_modify_keyword()
 
 
 
-function input_file_information(new_input_name, modify_keyword)
+function make_new_input(template_input_file,new_input_name, modify_keyword)
+    
+    import shutil
+    shutil.copy('template_input_file', 'new_input_name')  
+    with open('new_input_name', 'r', encoding = 'utf-8') as read_new_input_file
 
 
-function make_input_file()
 
 
 
-
-with open('template_input_file', 'r', encoding = 'utf-8') as read_template_input_file
-
+template_input_file = input('Please input the name of the template:')
 new_input_name = input('Please input the new input file name:')
-
 keyword_list = make_modify_keyword()
-input_information = input_file_information(new_input_name, keyword_list)
-
-new_input_file = make_input_file(ninput_file_information)
-
+new_input = make_new_input(template_input_file, new_input_name, keyword_list)
 
 
 
