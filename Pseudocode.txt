@@ -1,0 +1,96 @@
+# Modifying template to generate input files
+
+function make_modify_keyword()
+    keyword_list = {}
+    note = True
+
+    while note do
+        keyword_1 = input('Please input the keyword category:')
+        sub_keyword = {}
+        another_in_category = 'y'
+
+        while another_in_category.lower() == 'y' do 
+            keyword_2 = input('Please input the keyword:')
+            keyword_3 = input('Please input the keyword value:')
+            sub_keyword[keyword_2] = keyword_3
+            another_in_category = input('Add another keyword in' + keyword_1 + '?(y/n)')
+        keyword_list[keyword_1] = sub_keyword
+
+        finish = input('Do you want to finish modifying keywords?(y/n)')
+        if finish == 'n' do
+            continue
+        elif finish == 'y' do
+            note = False
+
+    return keyword_list
+
+
+
+function input_file_information(new_input_name, modify_keyword)
+
+
+function make_input_file()
+
+
+
+
+with open('template_input_file', 'r', encoding = 'utf-8') as read_template_input_file
+
+new_input_name = input('Please input the new input file name:')
+
+keyword_list = make_modify_keyword()
+input_information = input_file_information(new_input_name, keyword_list)
+
+new_input_file = make_input_file(ninput_file_information)
+
+
+
+
+# Submitting calculations
+## Will be implemented by slurm shell bash on HPCC
+
+
+
+# Collect energy data from output .log files
+
+function collect_energy(read_log_file)
+    lines = read_log_file.readlines()
+    energy = {}
+    for line in lines do
+        if 'SCF energy' in line do
+            energy['SCF'] = float(energy_in_line_SCF)
+        elif 'CCSD energy' in line do 
+            energy['CCSD'] = float(energy_in_line_CCSD)
+        elif 'CCSDt energy' in line do 
+            energy['CCSDt'] = float(energy_in_line_CCSDt) 
+    return energy
+
+log_file_names = ['output_.log_file_1', 'output_.log_file_2', ...]  ## Can be done separately by snakemake
+data = {}
+
+for output_file in log_file_names do
+    with open('output_.log_file', 'r', encoding = 'utf-8') as read_log_file
+    log_file_energy = collect_energy(read_log_file)
+    data[read_log_file_name] = log_file_energy   ## data is a dictionary with structure {log_file_name:{lof_file_energy:pertinent_energy}}, which will be used for plotting
+
+
+
+
+
+# Plot data and save the plots
+## Will be implemented by Matplotlib package
+
+function plot(data, pertinent_parameter)
+    plot = plotting(data, pertinent_parameter)
+    return plot
+
+function save_plot(file_name, plot)
+      saveplot = write(plot, file_name)
+      return saveplot 
+
+create_plot = plot(data, pertinent_parameter)
+save_plot = save_plot(file_name, create_plot)
+
+
+
+### All python and shell bashes will be packed by snakemake
