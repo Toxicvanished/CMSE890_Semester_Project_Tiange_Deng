@@ -1,36 +1,94 @@
 # Modifying template to generate input files
 
-function make_modify_keyword()
+
+function read_keyword_list(premade_csv_file)
+    read_file = read(premade_csv_file)
     keyword_list = {}
-    note = True
-
-    while note do
-        keyword_1 = input('Please input the keyword category:')
-        sub_keyword = {}
-        another_in_category = 'y'
-
-        while another_in_category.lower() == 'y' do 
-            keyword_2 = input('Please input the keyword:')
-            keyword_3 = input('Please input the keyword value:')
-            sub_keyword[keyword_2] = keyword_3
-            another_in_category = input('Add another keyword in' + keyword_1 + '?(y/n)')
-        keyword_list[keyword_1] = sub_keyword
-
-        finish = input('Do you want to finish modifying keywords?(y/n)')
-        if finish == 'n' do
-            continue
-        elif finish == 'y' do
-            note = False
-
+    for line in read_file do
+              split_line = line.strip().split(',')
+        keyword_sublist = split_line[1:-1]
+        keyword_list[split_line[0]] = keyword_sublist
     return keyword_list
 
-
-
-function make_new_input(template_input_file,new_input_name, modify_keyword)
     
-    import shutil
-    shutil.copy('template_input_file', 'new_input_name')  
-    with open('new_input_name', 'r', encoding = 'utf-8') as read_new_input_file
+
+
+
+
+
+
+
+function make_modify_keyword(keyword_list) 
+   
+    modified_keyword = {}
+
+    for option in keyword_list.keys() do
+        keyword_1 = input('Do you want to modify the' + option + 'category?(y/n)')
+
+        if keyword_1.lower() == 'n' do
+            continue
+
+        else do
+            modified_subkeyword = {}
+
+            for sub_option in keywprd_list[option] do
+                keyword_2 = input('Do you want to modify the' + sub_option + 'keyword in the' + option + 'category?(y/n)')
+    
+                if keyword_2.lower() == 'n' do
+                    continue
+
+                else do
+                    keyword_3 = input('Please input the keyword value:')
+                    modified_subkeyword[sub_option] = keyword_3
+
+             modified_keyword[option] = modified_subkeyword
+                          
+    return modified_keyword
+
+
+
+
+
+
+
+
+
+
+function make_new_input(template_input_file, modified_keyword)  
+
+    new_input_file = input('Please input the name of the new input file:')
+
+    with open('new_input_file', 'a', encoding = 'utf-8') as f, open ('template_input_file', 'r', encoding = 'utf-8') as t
+
+    for line in t do
+        write_in = True
+
+        for category in modified_keyword.keys() do
+            if the category not in line do
+                continue
+            else
+                write_in = False
+                tline_split = t.strip().split(' ') 
+                new_line = ' ' + tline_split[0]
+                for keyword in tline_split[1:-2] do
+                    if keyword in modified_keyword[category].keys() do
+                        keyword_1 = keyword.split('=')[1] + '=' + modified_keyword[category][keyword]
+                        new_line += ' ' + keyword_1
+                    else
+                        new_line += keyword
+
+                 f.write(new_line)      
+    
+       
+            if write_in do
+                f.write(line)
+                    
+                
+        
+
+
+
+
 
 
 
@@ -43,8 +101,20 @@ new_input = make_new_input(template_input_file, new_input_name, keyword_list)
 
 
 
+
+
+
 # Submitting calculations
 ## Will be implemented by slurm shell bash on HPCC
+
+#SBATCH --nodes=10
+#SBATCH --cpus-per-task=6
+#SBATCH --mem-per-cpu=5G
+#SBATCH --time=09:29:59
+#SBATCH --job-name=job_name
+
+
+
 
 
 
@@ -68,7 +138,13 @@ data = {}
 for output_file in log_file_names do
     with open('output_.log_file', 'r', encoding = 'utf-8') as read_log_file
     log_file_energy = collect_energy(read_log_file)
-    data[read_log_file_name] = log_file_energy   ## data is a dictionary with structure {log_file_name:{lof_file_energy:pertinent_energy}}, which will be used for plotting
+    data[read_log_file_name] = log_file_energy   
+    ## data is a recursive dictionary with structure {log_file_name:{log_file_energy:pertinent_energy}}, which will be used for plotting
+
+
+
+
+
 
 
 
@@ -87,6 +163,12 @@ function save_plot(file_name, plot)
 
 create_plot = plot(data, pertinent_parameter)
 save_plot = save_plot(file_name, create_plot)
+
+
+
+
+
+
 
 
 
