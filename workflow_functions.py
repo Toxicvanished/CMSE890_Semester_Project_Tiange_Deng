@@ -46,7 +46,7 @@ def make_modified_keyword(keyword_list):
     modified_keywords = {}
     for category in keyword_list.keys():
         option_1 = input('Do you want to modify the' + category + 'category?(y/n)')
-        if option_1.lower() = 'n':
+        if option_1.lower() == 'n':
             continue
         else:
             modified_keyword = {}
@@ -70,10 +70,30 @@ def make_new_input(template,modified_keywords):
     Parameters
     ----------
     template : str
-        Specify the 
+        Specify the path of template input file
 
     Returns
     -------
     modified_keywords : dictionary
         The dictionary with modified value for each chosen keyword.
     """
+    new_input_file = input('Please input the path of the new input file:')
+    with open(new_input_file, 'a', encoding = 'utf-8') as f, open (template, 'r', encoding = 'utf-8') as t
+
+    for line in t:
+        for category in modified_keyword.keys():
+            if category not in line:
+                f.write(line)
+            else:
+                tline_split = t.strip().split(' ') 
+                new_line = ' ' + tline_split[0]
+                for keyword in tline_split[1:-2]:
+                    if keyword.strip().split('=')[0] in modified_keyword[category].keys():
+                        new_line += ' ' + keyword.strip().split('=')[0] + '=' + modified_keyword[category][keyword]
+                    else:
+                        new_line += keyword
+                new_line += ' ' + '$END'
+                f.write(new_line)      
+    
+       
+
