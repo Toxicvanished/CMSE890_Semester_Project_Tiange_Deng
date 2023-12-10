@@ -90,14 +90,11 @@ function make_new_input(template_input_file, modified_keyword)
 
 
 
-
-
-
-
 template_input_file = input('Please input the name of the template:')
 new_input_name = input('Please input the new input file name:')
 keyword_list = make_modify_keyword()
 new_input = make_new_input(template_input_file, new_input_name, keyword_list)
+
 
 
 
@@ -140,8 +137,6 @@ for output_file in log_file_names do
     log_file_energy = collect_energy(read_log_file)
     data[read_log_file_name] = log_file_energy   
     ## data is a recursive dictionary with structure {log_file_name:{log_file_energy:pertinent_energy}}, which will be used for plotting
-
-
 
 
 

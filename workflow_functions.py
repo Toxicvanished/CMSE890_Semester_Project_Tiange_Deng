@@ -1,3 +1,6 @@
+
+"""Following functions are the functions for the first part of the workflow"""
+
 def read_keyword_list(premade_file):
     """This function reads the premade category-keywords .csv file and return a
     dictionary contains the pertinent keywords to be submitted to modifications.
@@ -9,13 +12,13 @@ def read_keyword_list(premade_file):
 
     Returns
     -------
-    keyword_list : dictionary
+    keyword_list : dict
         The dictionary classifies corresponding keywords to certain categories as lists.
     """
     keyword_list = {}
     with open(premade_file) as p:
+        next(p)
         for line in p.readlines():
-            next(f)
             L = line.strip().split(',')
             for i, cat_key in enumerate(L):
                 if cat_key == None:
@@ -35,12 +38,12 @@ def make_modified_keyword(keyword_list):
 
     Parameters
     ----------
-    keyword_list : dictionary
+    keyword_list : dict
         The dictionary classifies corresponding keywords to certain categories as lists.
 
     Returns
     -------
-    modified_keywords : dictionary
+    modified_keywords : dict
         The dictionary with modified value for each chosen keyword.
     """
     modified_keywords = {}
@@ -64,6 +67,8 @@ def make_modified_keyword(keyword_list):
 
 
 
+
+
 def make_new_input(template,modified_keywords):
     """This function use the modified keywords to make new input files.
 
@@ -74,25 +79,58 @@ def make_new_input(template,modified_keywords):
 
     Returns
     -------
-    modified_keywords : dictionary
-        The dictionary with modified value for each chosen keyword.
+    None. Generate a new modified input file.
     """
     new_input_file = input('Please input the path of the new input file:')
     with open(new_input_file, 'a', encoding = 'utf-8') as f, open (template, 'r', encoding = 'utf-8') as t:
+
         for line in t:
-            for category in modified_keyword.keys():
+            for category in modified_keywords.keys():
                 if category not in line:
                     f.write(line)
                 else:
                     tline_split = t.strip().split(' ') 
                     new_line = ' ' + tline_split[0]
                     for keyword in tline_split[1:-2]:
-                        if keyword.strip().split('=')[0] in modified_keyword[category].keys():
-                            new_line += ' ' + keyword.strip().split('=')[0] + '=' + modified_keyword[category][keyword]
+                        if keyword.strip().split('=')[0] in modified_keywords[category].keys():
+                            new_line += ' ' + keyword.strip().split('=')[0] + '=' + modified_keywords[category][keyword]
                         else:
                             new_line += keyword
                     new_line += ' ' + '$END'
                     f.write(new_line)      
     
        
+
+
+
+
+
+
+
+"""Following functions are the functions for the second part of the workflow"""
+
+def print_result(read_log_file):
+    """This function reads the output .log files and returns a dictionary contains
+       pertinent energy for different approaches
+
+    Parameters
+    ----------
+    read_log_file : str
+        Specify the path of template input file
+
+    Returns
+    -------
+    energy : dict
+        The dictionary which contains target eneretics.
+    """
+    with open (read_log_file, 'r', encoding = 'utf-8') as r:
+        lines = r.readlines()
+        energy = {}
+        for line in lines do
+            if 'FINAL ROHF ENERGY IS' in line do
+                energy['SCF'] = float(line.strip().split(' ')[4])
+            elif 'CCSDt ENERGY' in line do 
+                energy['CCSD'] = float(line.strip().split(' ')[2])
+    return energy
+
 
