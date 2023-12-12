@@ -25,9 +25,6 @@ def read_keyword_list(premade_file):
 
     return keyword_list
 
-premade_file = input("Please input the path of the .csv file for keywords:")
-keyword_list = read_keyword_list(premade_file)
-print(keyword_list)
 
 def make_modified_keyword(keyword_list):
     """This function ask for the desired pertinent modified keywords and returns a
@@ -45,7 +42,7 @@ def make_modified_keyword(keyword_list):
     """
     modified_keywords = {}
     for category in keyword_list.keys():
-        option_1 = input("Do you want to modify the" + category + "category?(y/n)")
+        option_1 = input("Do you want to modify the" + ' ' + category + ' ' + "category?(y/n)")
         if option_1.lower() == "n":
             continue
         else:
@@ -53,9 +50,9 @@ def make_modified_keyword(keyword_list):
             for keyword in keyword_list[category]:
                 option_2 = input(
                     "Do you want to modify the"
-                    + keyword
+                    + ' ' + keyword + ' ' 
                     + "keyword in the"
-                    + category
+                    + ' ' + category + ' '
                     + "category?(y/n)"
                 )
                 if option_2.lower() == "n":
@@ -84,27 +81,33 @@ def make_new_input(template, modified_keywords):
         template, "r", encoding="utf-8"
     ) as t:
         for line in t:
+            write = False
             for category in modified_keywords.keys():
                 if category not in line:
-                    f.write(line)
+                    continue
                 else:
-                    tline_split = t.strip().split(" ")
-                    new_line = " " + tline_split[0]
-                    for keyword in tline_split[1:-2]:
+                    write = True
+                    tline_split = line.strip().split(" ")
+                    new_line = ' ' + tline_split[0]
+                    for keyword in tline_split[1:-1]:
+                        sub_keyword = keyword.strip().split('=')[0]
                         if (
-                            keyword.strip().split("=")[0]
-                            in modified_keywords[category].keys()
+                            sub_keyword in modified_keywords[category].keys()
                         ):
                             new_line += (
-                                " "
-                                + keyword.strip().split("=")[0]
-                                + "="
-                                + modified_keywords[category][keyword]
+                                ' '
+                                + keyword.strip().split('=')[0]
+                                + '='
+                                + modified_keywords[category][sub_keyword]
                             )
                         else:
-                            new_line += keyword
-                    new_line += " " + "$END"
-                    f.write(new_line)
+                            new_line += ' ' + keyword
+                    new_line += ' ' + '$END' + '\n'
+            if not write: 
+                f.write(line)
+            else:
+                f.write(new_line)
+                    
 
 
 """Following functions are the functions for the second part of the workflow"""
@@ -133,3 +136,4 @@ def print_result(read_log_file):
             elif "CCSDt ENERGY" in line:
                 energy["CCSD"] = float(line.strip().split(" ")[2])
     return energy
+
