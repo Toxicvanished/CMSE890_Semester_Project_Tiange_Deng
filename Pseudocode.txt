@@ -59,29 +59,31 @@ function make_new_input(template_input_file, modified_keyword)
     new_input_file = input('Please input the name of the new input file:')
 
     with open('new_input_file', 'a', encoding = 'utf-8') as f, open ('template_input_file', 'r', encoding = 'utf-8') as t
-
-    for line in t do
-        write_in = True
-
-        for category in modified_keyword.keys() do
-            if the category not in line do
-                continue
-            else
-                write_in = False
-                tline_split = t.strip().split(' ') 
-                new_line = ' ' + tline_split[0]
-                for keyword in tline_split[1:-2] do
-                    if keyword in modified_keyword[category].keys() do
-                        keyword_1 = keyword.split('=')[1] + '=' + modified_keyword[category][keyword]
-                        new_line += ' ' + keyword_1
-                    else
-                        new_line += keyword
-
-                 f.write(new_line)      
-    
-       
-            if write_in do
+        for line in t:
+            write = False
+            for category in modified_keywords.keys() do
+                if category not in line do
+                    continue
+                else do
+                    write = True
+                    tline_split = line.strip().split(" ")
+                    new_line = ' ' + tline_split[0]
+                    for keyword in tline_split[1:-1] do
+                        sub_keyword = keyword.strip().split('=')[0]
+                        if sub_keyword in modified_keywords[category].keys() do
+                            new_line += (
+                                ' '
+                                + keyword.strip().split('=')[0]
+                                + '='
+                                + modified_keywords[category][sub_keyword]
+                            )
+                        else do
+                            new_line += ' ' + keyword
+                    new_line += ' ' + '$END' + '\n'
+            if not write do 
                 f.write(line)
+            else:
+                f.write(new_line)
                     
                 
         
@@ -90,10 +92,11 @@ function make_new_input(template_input_file, modified_keyword)
 
 
 
-template_input_file = input('Please input the name of the template:')
-new_input_name = input('Please input the new input file name:')
-keyword_list = make_modify_keyword()
-new_input = make_new_input(template_input_file, new_input_name, keyword_list)
+premade_file = input("Please input the path of the .csv file for keywords:")
+keyword_list = wf.read_keyword_list(premade_file)
+modified_keywords = wf.make_modified_keyword(keyword_list)
+template_input_file = input("Please input the path of the template input file:")
+wf.make_new_input(template_input_file, modified_keywords)
 
 
 
@@ -102,14 +105,7 @@ new_input = make_new_input(template_input_file, new_input_name, keyword_list)
 
 
 # Submitting calculations
-## Will be implemented by slurm shell bash on HPCC
-
-#SBATCH --nodes=10
-#SBATCH --cpus-per-task=6
-#SBATCH --mem-per-cpu=5G
-#SBATCH --time=09:29:59
-#SBATCH --job-name=job_name
-
+## Will be implemented by shell bash on servers
 
 
 
@@ -137,30 +133,6 @@ for output_file in log_file_names do
     log_file_energy = collect_energy(read_log_file)
     data[read_log_file_name] = log_file_energy   
     ## data is a recursive dictionary with structure {log_file_name:{log_file_energy:pertinent_energy}}, which will be used for plotting
-
-
-
-
-
-
-
-
-# Plot data and save the plots
-## Will be implemented by Matplotlib package
-
-function plot(data, pertinent_parameter)
-    plot = plotting(data, pertinent_parameter)
-    return plot
-
-function save_plot(file_name, plot)
-      saveplot = write(plot, file_name)
-      return saveplot 
-
-create_plot = plot(data, pertinent_parameter)
-save_plot = save_plot(file_name, create_plot)
-
-
-
 
 
 

@@ -1,0 +1,6 @@
+Config file config.yaml is extended by additional config specified via the command line.
+Building DAG of jobs...
+MissingInputException in rule all in file /home2/dengtia4/cmse890_workflow/temp_file/script/Snakefile, line 4:
+Missing input files for rule all:
+    affected files:
+        ../dz.inp

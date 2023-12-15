@@ -1,0 +1,35 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+all          1
+print        1
+total        2
+
+Select jobs to execute...
+
+[Fri Dec 15 14:29:34 2023]
+rule print:
+    input: ../sto6g.log, ../sto3g.log
+    output: ../result.txt
+    jobid: 3
+    reason: Missing output files: ../result.txt
+    resources: tmpdir=/tmp
+
+[Fri Dec 15 14:29:34 2023]
+Error in rule print:
+    jobid: 3
+    input: ../sto6g.log, ../sto3g.log
+    output: ../result.txt
+
+RuleException:
+NameError in file /home2/dengtia4/cmse890_workflow/modified_files/script/Snakefile, line 26:
+The name 'input' is unknown in this context. Please make sure that you defined that variable. Also note that braces not used for variable access have to be escaped by repeating them, i.e. {{print $1}}
+  File "/home2/dengtia4/cmse890_workflow/modified_files/script/Snakefile", line 26, in __rule_print
+  File "/home2/dengtia4/miniconda3/envs/snakemake/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2023-12-15T142933.155953.snakemake.log

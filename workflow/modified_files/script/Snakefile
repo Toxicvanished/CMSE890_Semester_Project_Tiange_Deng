@@ -1,0 +1,26 @@
+FILENAMES, = glob_wildcards("../{filename}.inp")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        expand("../{filename}.log", filename=FILENAMES),
+        "../result.txt"
+
+# workflow
+rule submit:
+    input:
+        "../{filename}.inp"
+    output:
+        "../{filename}.log"
+    shell:
+        "./rungms_may9 {input} 00 1 4 > {output}"
+
+
+
+rule printo:
+    input:
+        expand("../{filename}.log", filename=FILENAMES)
+    output:
+        "../../../result.txt"
+    script:
+        "driver_after.py"

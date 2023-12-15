@@ -1,0 +1,6 @@
+Building DAG of jobs...
+MissingInputException in rule submit in file /home2/dengtia4/cmse890_workflow/temp_file/script/Snakefile, line 9:
+Missing input files for rule submit:
+    output: ../custom_output.inp
+    affected files:
+        ../custom_input.inp

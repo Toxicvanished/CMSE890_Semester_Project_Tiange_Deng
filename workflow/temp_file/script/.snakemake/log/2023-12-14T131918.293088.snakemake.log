@@ -1,0 +1,2 @@
+SyntaxError in file /home2/dengtia4/cmse890_workflow/script/Snakefile, line 5:
+Colon expected after keyword configfile. (Snakefile, line 5)

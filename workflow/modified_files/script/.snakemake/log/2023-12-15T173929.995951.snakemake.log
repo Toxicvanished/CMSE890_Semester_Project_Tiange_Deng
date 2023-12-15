@@ -1,0 +1,2 @@
+SyntaxError in file /home2/dengtia4/cmse890_workflow/modified_files/script/Snakefile, line 27:
+Multiple run/shell/script/notebook/wrapper/template_engine/cwl keywords in rule printo. (Snakefile, line 27)

@@ -1,0 +1,2 @@
+SyntaxError in file /home2/dengtia4/cmse890_workflow/modified_files/script/Snakefile, line 26:
+unterminated string literal (detected at line 52)

@@ -1,0 +1,15 @@
+configfile:"config.yaml"
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        expand("../../modified_files/{custom_output}.inp", custom_output=config["custom_output"])
+
+# workflow
+rule submit:
+    input:
+        expand("../{custom_input}.inp", custom_input=config["custom_input"])
+    output:
+        expand("../../modified_files/{custom_output}.inp", custom_output=config["custom_output"])
+    shell:
+        "python driver_before.py {input} {output}"

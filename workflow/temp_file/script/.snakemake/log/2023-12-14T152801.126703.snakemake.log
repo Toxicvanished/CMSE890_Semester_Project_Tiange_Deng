@@ -1,0 +1,3 @@
+WorkflowError in file /home2/dengtia4/cmse890_workflow/temp_file/script/Snakefile, line 1:
+Config file must be given as JSON or YAML with keys at top level.
+  File "/home2/dengtia4/cmse890_workflow/temp_file/script/Snakefile", line 1, in <module>

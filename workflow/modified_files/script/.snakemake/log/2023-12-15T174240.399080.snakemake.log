@@ -1,0 +1,65 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count
+------  -------
+all           1
+printo        1
+submit        2
+total         4
+
+Select jobs to execute...
+
+[Fri Dec 15 17:42:42 2023]
+rule submit:
+    input: ../sto6g.inp
+    output: ../sto6g.log
+    jobid: 1
+    reason: Missing output files: ../sto6g.log
+    wildcards: filename=sto6g
+    resources: tmpdir=/tmp
+
+
+[Fri Dec 15 17:42:42 2023]
+rule submit:
+    input: ../sto3g.inp
+    output: ../sto3g.log
+    jobid: 2
+    reason: Missing output files: ../sto3g.log
+    wildcards: filename=sto3g
+    resources: tmpdir=/tmp
+
+[Fri Dec 15 17:43:59 2023]
+Finished job 1.
+1 of 4 steps (25%) done
+[Fri Dec 15 17:44:00 2023]
+Finished job 2.
+2 of 4 steps (50%) done
+Select jobs to execute...
+
+[Fri Dec 15 17:44:00 2023]
+rule printo:
+    input: ../sto6g.log, ../sto3g.log
+    output: ../result.txt
+    jobid: 3
+    reason: Missing output files: ../result.txt; Input files updated by another job: ../sto3g.log, ../sto6g.log
+    resources: tmpdir=/tmp
+
+[Fri Dec 15 17:44:01 2023]
+Finished job 3.
+3 of 4 steps (75%) done
+Select jobs to execute...
+
+[Fri Dec 15 17:44:01 2023]
+localrule all:
+    input: ../sto6g.log, ../sto3g.log, ../result.txt
+    jobid: 0
+    reason: Input files updated by another job: ../result.txt, ../sto3g.log, ../sto6g.log
+    resources: tmpdir=/tmp
+
+[Fri Dec 15 17:44:01 2023]
+Finished job 0.
+4 of 4 steps (100%) done
+Complete log: .snakemake/log/2023-12-15T174240.399080.snakemake.log

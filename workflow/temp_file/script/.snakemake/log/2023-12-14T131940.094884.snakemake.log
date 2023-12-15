@@ -1,0 +1,5 @@
+Config file config.yaml is extended by additional config specified via the command line.
+Building DAG of jobs...
+WildcardError in rule modify in file /home2/dengtia4/cmse890_workflow/script/Snakefile, line 15:
+Wildcards in input files cannot be determined from output files:
+'custom_input'
