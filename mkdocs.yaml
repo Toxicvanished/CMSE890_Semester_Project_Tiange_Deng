@@ -1,0 +1,24 @@
+
+site_name: CMSE890 Final Project
+theme:
+  name: "material"
+plugins:
+  - mkdocstrings
+nav:
+  - My Title: index.md
+  - Tutorial: 
+      - Description: tutorial.md
+      - Functions: 
+        - read_keyword_list: read_keyword_list.md
+        - make_modified_keyword: make_modified_keyword.md
+        - make_new_input: make_new_input.md
+        - print_result: print_result.md
+
+  - How-to Guide: 
+    - Description: howtoguide.md
+  - Reference: 
+    - Reference: reference.md
+  - Explanation: 
+    - Explanation: explanation.md
+
+theme: readthedocs
