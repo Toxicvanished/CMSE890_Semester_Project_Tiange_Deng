@@ -5,13 +5,9 @@ def read_keyword_list(premade_file):
     """This function reads the premade category-keywords .csv file and return a
     dictionary contains the pertinent keywords to be submitted to modifications.
 
-    Parameters
-    ----------
     premade_file : str
         Path to the category-keywords file.
 
-    Returns
-    -------
     keyword_list : dict
         The dictionary classifies corresponding keywords to certain categories as lists.
     """
@@ -30,13 +26,9 @@ def make_modified_keyword(keyword_list):
     """This function ask for the desired pertinent modified keywords and returns a
        dictionary for making the new input file.
 
-    Parameters
-    ----------
     keyword_list : dict
         The dictionary classifies corresponding keywords to certain categories as lists.
 
-    Returns
-    -------
     modified_keywords : dict
         The dictionary with modified value for each chosen keyword.
     """
@@ -67,13 +59,9 @@ def make_modified_keyword(keyword_list):
 def make_new_input(template, new_input_file, modified_keywords):
     """This function use the modified keywords to make new input files.
 
-    Parameters
-    ----------
     template : str
         Specify the path of template input file
 
-    Returns
-    -------
     None. Generate a new modified input file.
     """
     with open(new_input_file, "a", encoding="utf-8") as f, open(
@@ -116,13 +104,9 @@ def print_result(read_log_file, result_condensed):
     """This function reads the output .log files and returns a dictionary contains
        pertinent energy for different approaches
 
-    Parameters
-    ----------
     read_log_file : str
         Specify the path of template input file
 
-    Returns
-    -------
     energy : dict
         The dictionary which contains target eneretics.
     """
