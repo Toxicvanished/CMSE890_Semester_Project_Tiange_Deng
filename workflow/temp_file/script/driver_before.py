@@ -5,7 +5,6 @@ import sys
 
 premade_file = input("Please input the path of the .csv file for keywords:")
 keyword_list = wf.read_keyword_list(premade_file)
-print(keyword_list)
 modified_keywords = wf.make_modified_keyword(keyword_list)
 template_input_file = sys.argv[1]
 new_input_file = sys.argv[2]
